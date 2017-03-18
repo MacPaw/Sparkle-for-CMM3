@@ -1555,24 +1555,49 @@
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Sparkle Project";
 				TargetAttributes = {
+					1420DF491962329200203BB0 = {
+						DevelopmentTeam = 2M6BY8QGR8;
+					};
+					14732BC51960F69300593899 = {
+						DevelopmentTeam = 2M6BY8QGR8;
+					};
+					1495005F195FB89400BC5B5B = {
+						DevelopmentTeam = 2M6BY8QGR8;
+					};
 					331726741B4D36F2008B2D77 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 2M6BY8QGR8;
 					};
 					331726961B4D5F27008B2D77 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 2M6BY8QGR8;
 					};
 					33545B801B4679080059250D = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 2M6BY8QGR8;
+						ProvisioningStyle = Manual;
+					};
+					55C14BB6136EEF1500649790 = {
+						DevelopmentTeam = 2M6BY8QGR8;
+						ProvisioningStyle = Manual;
+					};
+					5D06E8CF0FD68C7C005AE3F6 = {
+						DevelopmentTeam = 2M6BY8QGR8;
 					};
 					612279D80DB5470200AB99EA = {
+						DevelopmentTeam = 2M6BY8QGR8;
 						TestTargetID = 8DC2EF4F0486A6940098B216;
 					};
 					61B5F90109C4CEE200B25A18 = {
+						DevelopmentTeam = 2M6BY8QGR8;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 0;
 							};
 						};
+					};
+					8DC2EF4F0486A6940098B216 = {
+						DevelopmentTeam = 2M6BY8QGR8;
 					};
 				};
 			};
@@ -2285,6 +2310,7 @@
 			baseConfigurationReference = 149B78631B7D3A0C00D7D62C /* ConfigCommonCoverage.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				DEVELOPMENT_TEAM = 2M6BY8QGR8;
 			};
 			name = Coverage;
 		};
@@ -2368,6 +2394,7 @@
 			baseConfigurationReference = FA1941CF0D94A70100DD942E /* ConfigCommonDebug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				DEVELOPMENT_TEAM = 2M6BY8QGR8;
 			};
 			name = Debug;
 		};
@@ -2376,6 +2403,7 @@
 			baseConfigurationReference = FA1941CC0D94A70100DD942E /* ConfigCommonRelease.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Developer ID Application";
+				DEVELOPMENT_TEAM = 2M6BY8QGR8;
 			};
 			name = Release;
 		};
@@ -2402,7 +2430,6 @@
 		331726A91B4D5F28008B2D77 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				GCC_PREFIX_HEADER = Sparkle/DevMateSparkle.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -2416,7 +2443,6 @@
 		331726AA1B4D5F28008B2D77 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				GCC_PREFIX_HEADER = Sparkle/DevMateSparkle.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -2463,7 +2489,6 @@
 		33E0CFBA1B835C99003B201B /* Coverage */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				PRODUCT_NAME = DevMateSparkle_lib;
 			};
 			name = Coverage;
