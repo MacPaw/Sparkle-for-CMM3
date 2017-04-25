@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9046" systemVersion="15C27e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12120" systemVersion="16F54b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9046"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SUAutomaticUpdateAlert">
@@ -24,16 +26,14 @@
                     <imageView id="7">
                         <rect key="frame" x="23" y="73" width="64" height="64"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <animations/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSApplicationIcon" id="38"/>
                         <connections>
                             <binding destination="-2" name="value" keyPath="applicationIcon" id="10"/>
                         </connections>
                     </imageView>
-                    <textField verticalHuggingPriority="750" id="8">
+                    <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" id="8">
                         <rect key="frame" x="105" y="120" width="497" height="17"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <animations/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="39">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -43,10 +43,9 @@
                             <binding destination="-2" name="value" keyPath="titleText" id="11"/>
                         </connections>
                     </textField>
-                    <textField verticalHuggingPriority="750" id="9">
+                    <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" id="9">
                         <rect key="frame" x="105" y="81" width="497" height="31"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <animations/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="40">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -56,10 +55,9 @@
                             <binding destination="-2" name="value" keyPath="descriptionText" id="14"/>
                         </connections>
                     </textField>
-                    <button verticalHuggingPriority="750" id="15">
+                    <button verticalHuggingPriority="750" misplaced="YES" id="15">
                         <rect key="frame" x="435" y="12" width="167" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Kur ve yeniden başlat" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="41">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -71,10 +69,9 @@ DQ
                             <action selector="installNow:" target="-2" id="33"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" id="16">
-                        <rect key="frame" x="306" y="12" width="129" height="32"/>
+                    <button verticalHuggingPriority="750" misplaced="YES" id="16">
+                        <rect key="frame" x="307" y="12" width="128" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Kapatırken kur" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="42">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -86,10 +83,9 @@ Gw
                             <action selector="installLater:" target="-2" id="34"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" id="30">
-                        <rect key="frame" x="102" y="12" width="116" height="32"/>
+                    <button verticalHuggingPriority="750" misplaced="YES" id="30">
+                        <rect key="frame" x="102" y="12" width="153" height="32"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Güncellemeyi kurma" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="44">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -98,10 +94,9 @@ Gw
                             <action selector="doNotInstall:" target="-2" id="35"/>
                         </connections>
                     </button>
-                    <button id="17">
-                        <rect key="frame" x="105" y="58" width="619" height="18"/>
+                    <button misplaced="YES" id="17">
+                        <rect key="frame" x="105" y="58" width="497" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                         <buttonCell key="cell" type="check" title="Bundan sonra güncellemeleri kendiliğinden indir ve kur" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="43">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="smallSystem"/>
@@ -111,7 +106,6 @@ Gw
                         </connections>
                     </button>
                 </subviews>
-                <animations/>
             </view>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="18" userLabel="Shared Defaults"/>
