@@ -69,20 +69,6 @@ DQ
                             <action selector="installNow:" target="-2" id="33"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" misplaced="YES" id="16">
-                        <rect key="frame" x="300" y="12" width="135" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                        <buttonCell key="cell" type="push" title="Installeer bij Stop" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="42">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="installLater:" target="-2" id="34"/>
-                        </connections>
-                    </button>
                     <button verticalHuggingPriority="750" misplaced="YES" id="30">
                         <rect key="frame" x="102" y="12" width="112" height="32"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -103,6 +89,20 @@ Gw
                         </buttonCell>
                         <connections>
                             <binding destination="18" name="value" keyPath="values.SUAutomaticallyUpdate" id="19"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" misplaced="YES" id="bR4-0Q-d2n">
+                        <rect key="frame" x="282" y="12" width="153" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Installeer bij Stop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eyG-R0-CH7">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="installLater:" target="-2" id="jrY-CP-OpG"/>
                         </connections>
                     </button>
                 </subviews>

@@ -69,20 +69,6 @@ DQ
                             <action selector="installNow:" target="-2" id="33"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" misplaced="YES" id="16">
-                        <rect key="frame" x="269" y="12" width="187" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                        <buttonCell key="cell" type="push" title="Встановити при закритті" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="42">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="installLater:" target="-2" id="34"/>
-                        </connections>
-                    </button>
                     <button misplaced="YES" id="17">
                         <rect key="frame" x="105" y="58" width="588" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -103,6 +89,20 @@ Gw
                         </buttonCell>
                         <connections>
                             <action selector="doNotInstall:" target="-2" id="35"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" misplaced="YES" id="feQ-Ov-xmH">
+                        <rect key="frame" x="258" y="12" width="198" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Встановити при закритті" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="J2h-GX-6ny">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="installLater:" target="-2" id="2At-Wo-aVx"/>
                         </connections>
                     </button>
                 </subviews>

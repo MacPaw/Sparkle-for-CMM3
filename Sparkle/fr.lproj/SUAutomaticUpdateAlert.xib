@@ -55,20 +55,6 @@
                             <binding destination="-2" name="value" keyPath="descriptionText" id="14"/>
                         </connections>
                     </textField>
-                    <button verticalHuggingPriority="750" misplaced="YES" id="15">
-                        <rect key="frame" x="457" y="12" width="145" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                        <buttonCell key="cell" type="push" title="Installer et relancer" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="41">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="installNow:" target="-2" id="33"/>
-                        </connections>
-                    </button>
                     <button verticalHuggingPriority="750" id="30">
                         <rect key="frame" x="102" y="12" width="116" height="32"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -92,7 +78,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" misplaced="YES" id="16">
-                        <rect key="frame" x="292" y="12" width="158" height="32"/>
+                        <rect key="frame" x="287" y="12" width="158" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                         <buttonCell key="cell" type="push" title="Installer en quittant" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="42">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -103,6 +89,20 @@ Gw
                         </buttonCell>
                         <connections>
                             <action selector="installLater:" target="-2" id="34"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" misplaced="YES" id="Gp3-L6-vfl">
+                        <rect key="frame" x="445" y="12" width="157" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Installer et relancer" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="A3e-Zs-htT">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="installNow:" target="-2" id="PRd-Ks-Hda"/>
                         </connections>
                     </button>
                 </subviews>
