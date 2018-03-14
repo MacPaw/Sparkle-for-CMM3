@@ -46,5 +46,5 @@
 #define SUUpdaterWorking                        DM_SUUpdater // Used in SUUpdaterLoader.m file
 #define SUUpdaterLoader                         DM_SUUpdaterLoader
 
-#import "Sparkle.pch"
+#include "Sparkle.pch"
 

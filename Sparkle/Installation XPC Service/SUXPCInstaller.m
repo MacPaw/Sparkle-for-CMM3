@@ -69,16 +69,15 @@ BOOL SUShouldUseXPCInstaller(void)
     return (serviceConnection);
 }
 
-+ (BOOL)releaseItemFromQuarantineAtRootURL:(NSURL *)rootURL allowsAuthorization:(BOOL)flag error:(NSError *__autoreleasing *)outError
++ (BOOL)releaseItemFromQuarantineAtRootURL:(NSURL *)rootURL error:(NSError *__autoreleasing *)outError
 {
     xpc_connection_t connection = [self getSandboxXPCService];
 
 	xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
-	xpc_dictionary_set_int64(message, SUInstallServiceTaskTypeKey, (int64_t)SUInstallServiceTaskAuthReleaseFromQuarantine);
+	xpc_dictionary_set_int64(message, SUInstallServiceTaskTypeKey, (int64_t)SUInstallServiceTaskReleaseFromQuarantine);
 	
 	if (rootURL)
-		xpc_dictionary_set_string(message, SUInstallServiceSourcePathKey, rootURL.path.fileSystemRepresentation);
-    xpc_dictionary_set_bool(message, SUInslallServiceAllowsAuthKey, flag ? true : false);
+		xpc_dictionary_set_string(message, SUInstallServiceSourcePathKey, (const char *)rootURL.path.fileSystemRepresentation);
 	
     __block BOOL xpcDidReply = NO;
     __block NSError *error = nil;
@@ -212,7 +211,7 @@ BOOL SUShouldUseXPCInstaller(void)
             if (![strArgument isKindOfClass:[NSString class]])
                 strArgument = [argument description];
             
-            xpc_array_set_string(array, XPC_ARRAY_APPEND, [strArgument UTF8String]);
+            xpc_array_set_string(array, XPC_ARRAY_APPEND, (const char *)[strArgument UTF8String]);
         }
         xpc_dictionary_set_value(message, SUInstallServiceLaunchTaskArgumentsKey, array);
         xpc_release(array);
@@ -225,7 +224,7 @@ BOOL SUShouldUseXPCInstaller(void)
             NSString *xpc_key = [key isKindOfClass:[NSString class]] ? key : [key description];
             NSString *xpc_value = [obj isKindOfClass:[NSString class]] ? obj : [obj description];
             
-            xpc_dictionary_set_string(dict, [xpc_key UTF8String], [xpc_value UTF8String]);
+            xpc_dictionary_set_string(dict, [xpc_key UTF8String], (const char *)[xpc_value UTF8String]);
         }];
         
         xpc_dictionary_set_value(message, SUInstallServiceLaunchTaskEnvironmentKey, dict);

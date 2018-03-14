@@ -10,6 +10,7 @@
 #define SUUPDATEDRIVER_H
 
 #import <Cocoa/Cocoa.h>
+#import "SUConstants.h"
 
 extern NSString *const SUUpdateDriverFinishedNotification;
 

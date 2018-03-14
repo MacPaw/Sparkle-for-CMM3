@@ -60,6 +60,15 @@ NSString *const SUUpdaterAppcastNotificationKey = @"SUUpdaterAppCastNotification
 static NSMutableDictionary *sharedUpdaters = nil;
 static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaultsObservationContext";
 
+#ifdef DEBUG
++ (void)load
+{
+    // Debug builds have different configurations for update check intervals
+    // We're using NSLog instead of SULog here because we don't want to start Sparkle's logger here
+    NSLog(@"WARNING: This is running a Debug build of Sparkle; don't use this in production!");
+}
+#endif
+
 + (SUUpdater *)sharedUpdater
 {
     return [self updaterForBundle:[NSBundle mainBundle]];
@@ -69,7 +78,7 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
 + (SUUpdater *)updaterForBundle:(NSBundle *)bundle
 {
     if (bundle == nil) bundle = [NSBundle mainBundle];
-    id updater = sharedUpdaters[[NSValue valueWithNonretainedObject:bundle]];
+    id updater = [sharedUpdaters objectForKey:[NSValue valueWithNonretainedObject:bundle]];
     if (updater == nil) {
         updater = [[[self class] alloc] initForBundle:bundle];
     }
@@ -94,7 +103,7 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
         [self registerAsObserver];
     }
 
-    id updater = sharedUpdaters[[NSValue valueWithNonretainedObject:bundle]];
+    id updater = [sharedUpdaters objectForKey:[NSValue valueWithNonretainedObject:bundle]];
     if (updater)
 	{
         self = updater;
@@ -104,7 +113,7 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
         if (sharedUpdaters == nil) {
             sharedUpdaters = [[NSMutableDictionary alloc] init];
         }
-        sharedUpdaters[[NSValue valueWithNonretainedObject:bundle]] = self;
+        [sharedUpdaters setObject:self forKey:[NSValue valueWithNonretainedObject:bundle]];
         host = [[SUHost alloc] initWithBundle:bundle];
 
         // This runs the permission prompt if needed, but never before the app has finished launching because the runloop won't run before that
@@ -123,7 +132,7 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
 -(void)checkIfConfiguredProperly {
     BOOL hasPublicDSAKey = [self.host publicDSAKey] != nil;
     BOOL isMainBundle = [self.host.bundle isEqualTo:[NSBundle mainBundle]];
-    BOOL hostIsCodeSigned = [SUCodeSigningVerifier applicationAtPathIsCodeSigned:self.host.bundlePath];
+    BOOL hostIsCodeSigned = [SUCodeSigningVerifier bundleAtURLIsCodeSigned:self.host.bundle.bundleURL];
     NSURL *feedURL = [self feedURL];
     BOOL servingOverHttps = [[[feedURL scheme] lowercaseString] isEqualToString:@"https"];
     if (!hasPublicDSAKey && !hostIsCodeSigned) {
@@ -134,13 +143,14 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
     }
 
 #if __MAC_OS_X_VERSION_MAX_ALLOWED >= 101100
-    BOOL atsExceptionsExist = nil != [self.host objectForInfoDictionaryKey:@"NSAppTransportSecurity"];
-    if (isMainBundle && !servingOverHttps && !atsExceptionsExist) {
-        [self showAlertText:@"Insecure feed URL is blocked in OS X 10.11"
-                 informativeText:[NSString stringWithFormat:@"You must change the feed URL (%@) to use HTTPS or disable App Transport Security.\n\nFor more information:\nhttp://sparkle-project.org/documentation/app-transport-security/", [feedURL absoluteString]]];
-    }
-    if (!isMainBundle && !servingOverHttps) {
-        SULog(@"WARNING: Serving updates over HTTP may be blocked in OS X 10.11. Please change the feed URL (%@) to use HTTPS. For more information:\nhttp://sparkle-project.org/documentation/app-transport-security/", feedURL);
+    if (!servingOverHttps) {
+        BOOL atsExceptionsExist = nil != [self.host objectForInfoDictionaryKey:@"NSAppTransportSecurity"];
+        if (isMainBundle && !atsExceptionsExist) {
+            [self showAlertText:SULocalizedString(@"Insecure feed URL is blocked in macOS 10.11", nil)
+                informativeText:[NSString stringWithFormat:SULocalizedString(@"You must change the feed URL (%@) to use HTTPS or disable App Transport Security.\n\nFor more information:\nhttps://sparkle-project.org/documentation/app-transport-security/", nil), [feedURL absoluteString]]];
+        } else if (!isMainBundle) {
+            SULog(@"WARNING: Serving updates over HTTP may be blocked in macOS 10.11. Please change the feed URL (%@) to use HTTPS. For more information:\nhttps://sparkle-project.org/documentation/app-transport-security/", feedURL);
+        }
     }
 #endif
 }
@@ -209,6 +219,7 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
         }
 
         self.driver = nil;
+        [self updateLastUpdateCheckDate];
         [self scheduleNextUpdateCheck];
     }
 }
@@ -216,6 +227,13 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
 - (NSDate *)lastUpdateCheckDate
 {
     return [self.host objectForUserDefaultsKey:SULastCheckTimeKey];
+}
+
+- (void)updateLastUpdateCheckDate
+{
+    [self willChangeValueForKey:@"lastUpdateCheckDate"];
+    [self.host setObject:[NSDate date] forUserDefaultsKey:SULastCheckTimeKey];
+    [self didChangeValueForKey:@"lastUpdateCheckDate"];
 }
 
 - (void)scheduleNextUpdateCheck
@@ -243,75 +261,13 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
     self.checkTimer = [NSTimer scheduledTimerWithTimeInterval:delayUntilCheck target:self selector:@selector(checkForUpdatesInBackground) userInfo:nil repeats:NO]; // Timer is non-repeating, may have invalidated itself, so we had to retain it.
 }
 
-
-- (void)putFeedURLIntoDictionary:(NSMutableDictionary *)theDict // You release this.
-{
-    theDict[@"feedURL"] = [self feedURL];
-}
-
-- (void)checkForUpdatesInBgReachabilityCheckWithDriver:(SUUpdateDriver *)inDriver /* RUNS ON ITS OWN THREAD */
-{
-    @try {
-        // This method *must* be called on its own thread. SCNetworkReachabilityCheckByName
-        //	can block, and it can be waiting a long time on slow networks, and we
-        //	wouldn't want to beachball the main thread for a background operation.
-        // We could use asynchronous reachability callbacks, but those aren't
-        //	reliable enough and can 'get lost' sometimes, which we don't want.
-
-		@autoreleasepool {
-            SCNetworkConnectionFlags flags = 0;
-            BOOL isNetworkReachable = YES;
-
-            // Don't perform automatic checks on unconnected laptops or dial-up connections that aren't online:
-            NSMutableDictionary *theDict = [NSMutableDictionary dictionary];
-            dispatch_sync(dispatch_get_main_queue(), ^{
-				[self putFeedURLIntoDictionary:theDict];	// Get feed URL on main thread, it's not safe to call elsewhere.
-            });
-
-            const char *hostname = [[(NSURL *)theDict[@"feedURL"] host] cStringUsingEncoding:NSUTF8StringEncoding];
-            SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, hostname);
-            Boolean reachabilityResult = NO;
-            // If the feed's using a file:// URL, we won't be able to use reachability.
-            if (reachability != NULL) {
-                SCNetworkReachabilityGetFlags(reachability, &flags);
-                CFRelease(reachability);
-            }
-
-			if( reachabilityResult )
-			{
-                BOOL reachable = (flags & kSCNetworkFlagsReachable) == kSCNetworkFlagsReachable;
-                BOOL automatic = (flags & kSCNetworkFlagsConnectionAutomatic) == kSCNetworkFlagsConnectionAutomatic;
-                BOOL local = (flags & kSCNetworkFlagsIsLocalAddress) == kSCNetworkFlagsIsLocalAddress;
-
-                if (!(reachable || automatic || local))
-                    isNetworkReachable = NO;
-            }
-
-            // If the network's not reachable, we pass a nil driver into checkForUpdatesWithDriver, which will then reschedule the next update so we try again later.
-            dispatch_async(dispatch_get_main_queue(), ^{
-				[self checkForUpdatesWithDriver: isNetworkReachable ? inDriver : nil];
-            });
-
-        }
-	} @catch (NSException *localException) {
-        SULog(@"UNCAUGHT EXCEPTION IN UPDATE CHECK TIMER: %@", [localException reason]);
-        // Don't propagate the exception beyond here. In Carbon apps that would trash the stack.
-    }
-}
-
-
 - (void)checkForUpdatesInBackground
 {
-    // Background update checks should only happen if we have a network connection.
-    //	Wouldn't want to annoy users on dial-up by establishing a connection every
-    //	hour or so:
+    // Do not use reachability for a preflight check. This can be deceptive and a bad idea. Apple does not recommend doing it.
     SUUpdateDriver *theUpdateDriver = [[([self automaticallyDownloadsUpdates] ? [SUAutomaticUpdateDriver class] : [SUScheduledUpdateDriver class])alloc] initWithUpdater:self];
-
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		[self checkForUpdatesInBgReachabilityCheckWithDriver:theUpdateDriver];
-    });
+    
+    [self checkForUpdatesWithDriver:theUpdateDriver];
 }
-
 
 - (BOOL)mayUpdateAndRestart
 {
@@ -353,9 +309,7 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
         [(id<SUPrivateUpdaterDelegate>)self.delegate updaterWillStartUpdateProcess:self];
     }
     
-    [self willChangeValueForKey:@"lastUpdateCheckDate"];
-    [self.host setObject:[NSDate date] forUserDefaultsKey:SULastCheckTimeKey];
-    [self didChangeValueForKey:@"lastUpdateCheckDate"];
+    [self updateLastUpdateCheckDate];
 
     if( [self.delegate respondsToSelector: @selector(updaterMayCheckForUpdates:)] && ![self.delegate updaterMayCheckForUpdates: self] )
 	{
@@ -546,7 +500,7 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
     // Build up the parameterized URL.
     NSMutableArray *parameterStrings = [NSMutableArray array];
     for (NSDictionary *currentProfileInfo in parameters) {
-        [parameterStrings addObject:[NSString stringWithFormat:@"%@=%@", [[currentProfileInfo[@"key"] description] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [[currentProfileInfo[@"value"] description] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+        [parameterStrings addObject:[NSString stringWithFormat:@"%@=%@", [[[currentProfileInfo objectForKey:@"key"] description] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [[[currentProfileInfo objectForKey:@"value"] description] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     }
 
     NSString *separatorCharacter = @"?";
@@ -590,7 +544,7 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
     if ([item action] == @selector(checkForUpdates:)) {
-        return ![self updateInProgress];
+        return ![self updateInProgress] || [self.driver isInterruptible];
     }
     return YES;
 }

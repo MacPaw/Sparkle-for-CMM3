@@ -8,7 +8,6 @@
 
 #import "SUDiskImageUnarchiver.h"
 #import "SUUnarchiver_Private.h"
-#import "NTSynchronousTask.h"
 #import "SULog.h"
 #include <CoreServices/CoreServices.h>
 #import "SUXPCInstaller.h"
@@ -48,22 +47,18 @@
 
         // get a unique mount point path
         NSString *mountPoint = nil;
-        do
-		{
+        do {
             // Using NSUUID would make creating UUIDs be done in Cocoa,
             // and thus managed under ARC. Sadly, the class is in 10.8 and later.
             CFUUIDRef uuid = CFUUIDCreate(NULL);
-			if (uuid)
-			{
+			if (uuid) {
                 NSString *uuidString = CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
-				if (uuidString)
-				{
+				if (uuidString) {
                     mountPoint = [@"/Volumes" stringByAppendingPathComponent:uuidString];
                 }
                 CFRelease(uuid);
             }
-		}
-		while ([[NSFileManager defaultManager] fileExistsAtPath:mountPoint]);
+		} while ([[NSFileManager defaultManager] fileExistsAtPath:mountPoint]);
 
         NSData *promptData = nil;
         promptData = [NSData dataWithBytes:"yes\n" length:4];
@@ -89,32 +84,46 @@
         
         __block NSData *output = nil;
         __block NSInteger taskResult = -1;
-		@try
-		{
-            if (shouldUseXPC)
-            {
-                [SUXPCInstaller launchTaskWithPath:hdiutilPath arguments:arguments environment:nil currentDirectoryPath:currentDirPath inputData:promptData waitUntilDone:YES completionHandler:^(int result, NSData *outputData) {
-                    taskResult = (NSInteger)result;
-                    output = [outputData copy];
-                }];
+		@try {
+            if (shouldUseXPC) {
+                [SUXPCInstaller launchTaskWithPath:hdiutilPath
+                                         arguments:arguments
+                                       environment:nil
+                              currentDirectoryPath:currentDirPath
+                                         inputData:promptData
+                                     waitUntilDone:YES
+                                 completionHandler:^(int result, NSData *outputData) {
+                                     taskResult = (NSInteger)result;
+                                     output = [outputData copy];
+                                 }];
+            } else {
+                NSTask *task = [[NSTask alloc] init];
+                task.launchPath = hdiutilPath;
+                task.currentDirectoryPath = currentDirPath;
+                task.arguments = arguments;
+                
+                NSPipe *inputPipe = [NSPipe pipe];
+                NSPipe *outputPipe = [NSPipe pipe];
+                
+                task.standardInput = inputPipe;
+                task.standardOutput = outputPipe;
+                
+                [task launch];
+                
+                [inputPipe.fileHandleForWriting writeData:promptData];
+                [inputPipe.fileHandleForWriting closeFile];
+                
+                // Read data to end *before* waiting until the task ends so we don't deadlock if the stdout buffer becomes full if we haven't consumed from it
+                output = [outputPipe.fileHandleForReading readDataToEndOfFile];
+                
+                [task waitUntilExit];
+                taskResult = task.terminationStatus;
             }
-            else
-            {
-                NTSynchronousTask *task = [[NTSynchronousTask alloc] init];
-
-                [task run:hdiutilPath directory:currentDirPath withArgs:arguments input:promptData];
-
-                taskResult = [task result];
-                output = [[task output] copy];
-            }
-        }
-        @catch (NSException *)
-        {
+        } @catch (NSException *) {
             goto reportError;
         }
 
-		if (taskResult != 0)
-		{
+		if (taskResult != 0) {
             NSString *resultStr = output ? [[NSString alloc] initWithData:output encoding:NSUTF8StringEncoding] : nil;
             SULog(@"hdiutil failed with code: %ld data: <<%@>>", (long)taskResult, resultStr);
             goto reportError;
@@ -122,30 +131,24 @@
         mountedSuccessfully = YES;
 
         // Now that we've mounted it, we need to copy out its contents.
-        if (shouldUseXPC)
-        {
+        if (shouldUseXPC) {
             NSError *error = nil;
             [SUXPCInstaller copyPathContent:mountPoint toDirectory:[self.archivePath stringByDeletingLastPathComponent] error:&error];
             
-            if (nil != error)
-            {
+            if (nil != error) {
                 SULog(@"Couldn't copy volume content: %ld - %@", error.code, error.localizedDescription);
                 goto reportError;
             }
-        }
-        else
-        {
+        } else {
             NSFileManager *manager = [[NSFileManager alloc] init];
             NSError *error = nil;
             NSArray *contents = [manager contentsOfDirectoryAtPath:mountPoint error:&error];
-            if (error)
-            {
+            if (error) {
                 SULog(@"Couldn't enumerate contents of archive mounted at %@: %@", mountPoint, error);
                 goto reportError;
             }
 
-            for (NSString *item in contents)
-            {
+            for (NSString *item in contents) {
                 NSString *fromPath = [mountPoint stringByAppendingPathComponent:item];
                 NSString *toPath = [[self.archivePath stringByDeletingLastPathComponent] stringByAppendingPathComponent:item];
 
@@ -156,8 +159,7 @@
 
                 SULog(@"copyItemAtPath:%@ toPath:%@", fromPath, toPath);
 
-                if (![manager copyItemAtPath:fromPath toPath:toPath error:&error])
-                {
+                if (![manager copyItemAtPath:fromPath toPath:toPath error:&error]) {
                     SULog(@"Couldn't copy item: %@ : %@", error, error.userInfo ? error.userInfo : @"");
                     goto reportError;
                 }
@@ -171,20 +173,25 @@
         dispatch_async(dispatch_get_main_queue(), delegateFailure);
 
     finally:
-        if (mountedSuccessfully)
-        {
+        if (mountedSuccessfully) {
             arguments = @[@"detach", mountPoint, @"-force"];
-            if (shouldUseXPC)
-            {
-                [SUXPCInstaller launchTaskWithPath:hdiutilPath arguments:arguments environment:nil currentDirectoryPath:nil inputData:nil waitUntilDone:NO completionHandler:nil];
+            if (shouldUseXPC) {
+                [SUXPCInstaller launchTaskWithPath:hdiutilPath
+                                         arguments:arguments
+                                       environment:nil
+                              currentDirectoryPath:nil
+                                         inputData:nil
+                                     waitUntilDone:NO
+                                 completionHandler:nil];
+            } else {
+                @try {
+                    [NSTask launchedTaskWithLaunchPath:hdiutilPath arguments:arguments];
+                } @catch (NSException *exception) {
+                    SULog(@"Failed to unmount %@", mountPoint);
+                    SULog(@"Exception: %@", exception);
+                }
             }
-            else
-            {
-                [NSTask launchedTaskWithLaunchPath:hdiutilPath arguments:arguments];
-            }
-        }
-        else
-        {
+        } else {
             SULog(@"Can't mount DMG %@", self.archivePath);
         }
     }
@@ -205,12 +212,10 @@
 - (BOOL)isEncrypted:(NSData *)resultData
 {
     BOOL result = NO;
-	if(resultData)
-	{
+	if(resultData) {
         NSString *data = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
 
-        if ((data != nil) && !NSEqualRanges([data rangeOfString:@"passphrase-count"], NSMakeRange(NSNotFound, 0)))
-		{
+        if ((data != nil) && !NSEqualRanges([data rangeOfString:@"passphrase-count"], NSMakeRange(NSNotFound, 0))) {
             result = YES;
         }
     }

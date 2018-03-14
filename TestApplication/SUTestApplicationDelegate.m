@@ -47,7 +47,7 @@ static NSString * const CODE_SIGN_ID = NSSTRING_MACRO(CODE_SIGN_IDENTITY);
         [[NSApplication sharedApplication] terminate:nil];
     }
     
-    SUFileManager *fileManager = [SUFileManager fileManagerAllowingAuthorization:NO];
+    SUFileManager *fileManager = [SUFileManager defaultManager];
     
     // Locate user's cache directory
     NSError *cacheError = nil;
@@ -62,7 +62,7 @@ static NSString * const CODE_SIGN_ID = NSSTRING_MACRO(CODE_SIGN_IDENTITY);
     assert(bundleIdentifier != nil);
     
     // Create a directory that'll be used for our web server listing
-    NSURL *serverDirectoryURL = [cacheDirectoryURL URLByAppendingPathComponent:bundleIdentifier];
+    NSURL *serverDirectoryURL = [[cacheDirectoryURL URLByAppendingPathComponent:bundleIdentifier] URLByAppendingPathComponent:@"ServerData"];
     if ([serverDirectoryURL checkResourceIsReachableAndReturnError:nil]) {
         NSError *removeServerDirectoryError = nil;
         
@@ -81,7 +81,10 @@ static NSString * const CODE_SIGN_ID = NSSTRING_MACRO(CODE_SIGN_IDENTITY);
     assert(bundleURL != nil);
     
     // Copy main bundle into server directory
-    NSURL *destinationBundleURL = [serverDirectoryURL URLByAppendingPathComponent:bundleURL.lastPathComponent];
+    NSString *bundleURLLastComponent = bundleURL.lastPathComponent;
+    assert(bundleURLLastComponent != nil);
+    
+    NSURL *destinationBundleURL = [serverDirectoryURL URLByAppendingPathComponent:bundleURLLastComponent];
     NSError *copyBundleError = nil;
     if (![fileManager copyItemAtURL:bundleURL toURL:destinationBundleURL error:&copyBundleError]) {
         NSLog(@"Failed to copy main bundle into server directory with error %@", copyBundleError);
@@ -95,8 +98,8 @@ static NSString * const CODE_SIGN_ID = NSSTRING_MACRO(CODE_SIGN_IDENTITY);
     assert(infoFileExists);
     
     NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] initWithContentsOfURL:infoURL];
-    infoDictionary[(__bridge NSString *)kCFBundleVersionKey] = UPDATED_VERSION;
-    infoDictionary[@"CFBundleShortVersionString"] = UPDATED_VERSION;
+    [infoDictionary setObject:UPDATED_VERSION forKey:(__bridge NSString *)kCFBundleVersionKey];
+    [infoDictionary setObject:UPDATED_VERSION forKey:@"CFBundleShortVersionString"];
     
     BOOL wroteInfoFile = [infoDictionary writeToURL:infoURL atomically:NO];
     assert(wroteInfoFile);
@@ -158,7 +161,9 @@ static NSString * const CODE_SIGN_ID = NSSTRING_MACRO(CODE_SIGN_IDENTITY);
     
     // Obtain the file attributes to get the file size of our update later
     NSError *fileAttributesError = nil;
-    NSDictionary *archiveFileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:archiveURL.path error:&fileAttributesError];
+    NSString *archivePath = archiveURL.path;
+    assert(archivePath != nil);
+    NSDictionary *archiveFileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:archivePath error:&fileAttributesError];
     if (archiveFileAttributes == nil) {
         NSLog(@"Failed to retrieve file attributes from archive with error %@", fileAttributesError);
         assert(NO);

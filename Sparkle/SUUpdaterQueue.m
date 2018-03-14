@@ -181,13 +181,13 @@
         updater.delegate = proxy;
         
         NSString *updaterKey = [self mapKeyForUpdater:updater];
-        self.delegatesMap[updaterKey] = proxy;
+        [self.delegatesMap setObject:proxy forKey:updaterKey];
     }
 }
 
 - (NSString *)mapKeyForUpdater:(SUUpdater *)updater
 {
-    return [NSString stringWithFormat:@"%p", updater];
+    return [NSString stringWithFormat:@"%p", (void *)updater];
 }
 
 - (id)realDelegateForUpdater:(SUUpdater *)updater
@@ -199,7 +199,7 @@
     @synchronized (self.delegatesMap)
     {
         NSString *updaterKey = [self mapKeyForUpdater:updater];
-        delegate = self.delegatesMap[updaterKey];
+        delegate = [self.delegatesMap objectForKey:updaterKey];
     }
     
     return delegate;
@@ -250,7 +250,7 @@
             
             @synchronized (self.delegatesMap)
             {
-                realDelegate = [self.delegatesMap[updaterKey] realDelegate];
+                realDelegate = [[self.delegatesMap objectForKey:updaterKey] realDelegate];
                 [self.delegatesMap removeObjectForKey:updaterKey];
             }
             
@@ -295,7 +295,9 @@
         
         @synchronized (self.updaters)
         {
-            self.currentUpdater = index < self.updaters.count ? self.updaters[index] : nil;
+            self.currentUpdater = (index < self.updaters.count
+                                   ? [self.updaters objectAtIndex:index]
+                                   : nil);
             index++;
         }
         

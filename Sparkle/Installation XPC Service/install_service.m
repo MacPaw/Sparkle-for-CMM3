@@ -119,18 +119,17 @@ static xpc_object_t SUSICopyPathContent(xpc_object_t message)
     return reply;
 }
 
-static xpc_object_t SUISReleaseFromQuarantineWithAuthentication(xpc_object_t message)
+static xpc_object_t SUISReleaseFromQuarantine(xpc_object_t message)
 {
     if (NULL == message)
         return NULL;
     
     const char *src = xpc_dictionary_get_string(message, SUInstallServiceSourcePathKey);
-    bool allowsAuth = xpc_dictionary_get_bool(message, SUInslallServiceAllowsAuthKey);
     
     NSFileManager *manager = [NSFileManager defaultManager];
     NSString *sourcePath = src ? [manager stringWithFileSystemRepresentation:src length:strlen(src)] : nil;
     NSURL *sourceURL = sourcePath ? [NSURL fileURLWithPath:sourcePath] : nil;
-    SUFileManager *fileManager = [SUFileManager fileManagerAllowingAuthorization:allowsAuth];
+    SUFileManager *fileManager = [SUFileManager defaultManager];
     NSError *error = nil;
     BOOL result = [fileManager releaseItemFromQuarantineAtRootURL:sourceURL error:&error];
     
@@ -162,7 +161,8 @@ static xpc_object_t SUISLaunchTask(xpc_object_t message)
         NSMutableArray *mutableArgs = [NSMutableArray arrayWithCapacity:count];
         for (size_t i = 0; i < count; i++)
         {
-            NSString *argument = [NSString stringWithUTF8String:xpc_array_get_string(array, i)];
+            const char *argumentCStr = xpc_array_get_string(array, i);
+            NSString *argument = argumentCStr ? [NSString stringWithUTF8String:argumentCStr] : nil;
             [mutableArgs addObject: argument ? argument : @""];
         }
         
@@ -319,9 +319,9 @@ static void peer_event_handler(xpc_connection_t peer, xpc_object_t event)
                     break;
                 }
                     
-                case SUInstallServiceTaskAuthReleaseFromQuarantine:
+                case SUInstallServiceTaskReleaseFromQuarantine:
                 {
-                    reply = SUISReleaseFromQuarantineWithAuthentication(event);
+                    reply = SUISReleaseFromQuarantine(event);
                     break;
                 }
                     

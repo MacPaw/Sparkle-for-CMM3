@@ -26,7 +26,7 @@ static NSString *sOriginalSUUpdaterClass = @"SUUpdater";
     {
         // Custom Sparkle.framework is absent
         // Add own SUUpdater proxy class
-        Class SUUpdaterClass = objc_allocateClassPair([NSObject class], [sOriginalSUUpdaterClass UTF8String], 0);
+        Class SUUpdaterClass = objc_allocateClassPair([NSObject class], (const char *)[sOriginalSUUpdaterClass UTF8String], 0);
         if (Nil != SUUpdaterClass)
         {
             objc_registerClassPair(SUUpdaterClass);
