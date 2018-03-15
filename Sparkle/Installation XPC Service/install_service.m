@@ -9,9 +9,12 @@
 #include <xpc/xpc.h>
 #include <asl.h>
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 #import "SUFileManager.h"
 #import "SUInstallServiceConstants.h"
+#import "SUConstants.h"
+#import "SUErrors.h"
+#import "SULog.h"
 
 static xpc_object_t SUSICopyPathContent(xpc_object_t message)
 {
@@ -93,11 +96,11 @@ static xpc_object_t SUSICopyPathContent(xpc_object_t message)
             
             if (![manager isReadableFileAtPath:fromPath])
             {
-                SULog(@"XPC Install Service: will skip \"%@\"", fromPath);
+                SULog(SULogLevelDefault, @"XPC Install Service: will skip \"%@\"", fromPath);
                 continue;
             }
 
-            SULog(@"XPC Install Service: will copy \"%@\" to \"%@\"", fromPath, toPath);
+            SULog(SULogLevelDefault, @"XPC Install Service: will copy \"%@\" to \"%@\"", fromPath, toPath);
 
             if ([manager fileExistsAtPath:toPath])
                 [manager removeItemAtPath:toPath error:&error];
@@ -333,7 +336,7 @@ static void peer_event_handler(xpc_connection_t peer, xpc_object_t event)
                     
                 default:
                 {
-                    SULog(@"XPC Install Service: Unknown XPC service task %lld", task);
+                    SULog(SULogLevelDefault, @"XPC Install Service: Unknown XPC service task %lld", task);
                     
                     reply = xpc_dictionary_create_reply(event);
                     xpc_dictionary_set_int64(reply, SUInstallServiceErrorCodeKey, (int64_t)SUXPCServiceError);

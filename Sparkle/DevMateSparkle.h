@@ -28,6 +28,7 @@
 #import <DevMateSparkle/SUExport.h>
 #import <DevMateSparkle/SUUpdater.h>
 #import <DevMateSparkle/SUUpdaterQueue.h>
+#import <DevMateSparkle/SUUpdaterDelegate.h>
 #import <DevMateSparkle/SUAppcast.h>
 #import <DevMateSparkle/SUAppcastItem.h>
 #import <DevMateSparkle/SUVersionComparisonProtocol.h>

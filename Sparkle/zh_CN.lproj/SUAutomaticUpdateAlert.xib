@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12120" systemVersion="16F54b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16C68" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
-        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SUAutomaticUpdateAlert">
             <connections>
+                <outlet property="installButton" destination="15" id="VHi-SZ-6td"/>
+                <outlet property="laterButton" destination="16" id="AZg-1M-E8w"/>
+                <outlet property="skipButton" destination="30" id="LpO-Ax-F1B"/>
                 <outlet property="window" destination="5" id="22"/>
             </connections>
         </customObject>
@@ -31,7 +32,7 @@
                             <binding destination="-2" name="value" keyPath="applicationIcon" id="10"/>
                         </connections>
                     </imageView>
-                    <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" id="8">
+                    <textField verticalHuggingPriority="750" id="8">
                         <rect key="frame" x="105" y="120" width="497" height="17"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="39">
@@ -43,7 +44,7 @@
                             <binding destination="-2" name="value" keyPath="titleText" id="11"/>
                         </connections>
                     </textField>
-                    <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" id="9">
+                    <textField verticalHuggingPriority="750" id="9">
                         <rect key="frame" x="105" y="81" width="497" height="31"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="40">
@@ -94,8 +95,8 @@ Gw
                             <action selector="doNotInstall:" target="-2" id="35"/>
                         </connections>
                     </button>
-                    <button misplaced="YES" id="17">
-                        <rect key="frame" x="105" y="58" width="497" height="18"/>
+                    <button id="17">
+                        <rect key="frame" x="105" y="58" width="619" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <buttonCell key="cell" type="check" title="以后自动下载和安装更新" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="43">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>

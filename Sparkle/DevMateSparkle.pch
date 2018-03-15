@@ -45,6 +45,3 @@
 #define NTSynchronousTask                       DM_NTSynchronousTask
 #define SUUpdaterWorking                        DM_SUUpdater // Used in SUUpdaterLoader.m file
 #define SUUpdaterLoader                         DM_SUUpdaterLoader
-
-#include "Sparkle.pch"
-

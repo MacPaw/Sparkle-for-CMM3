@@ -10,6 +10,7 @@
 #import "SUXPCInstaller.h"
 #import "SUInstallServiceConstants.h"
 #import "SUCodeSigningVerifier.h"
+#import "SUErrors.h"
 
 BOOL SUShouldUseXPCInstaller(void)
 {

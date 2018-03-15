@@ -8,12 +8,17 @@
 
 #import "SUUpdaterQueue.h"
 #import "SUUpdater.h"
-#import "SUUpdater_Private.h"
+#import "SUUpdaterPrivate.h"
 #import "SUConstants.h"
 #import "SUBasicUpdateDriver.h"
 #import "SUUserInitiatedUpdateDriver.h"
 
-@interface SUDelegateProxy : NSProxy <SUPrivateUpdaterDelegate>
+@interface SUUpdater (SUUpdaterQueue_PrivateExtensions)
+- (SUHost *)host;
+- (SUBasicUpdateDriver *)basicDriver;
+@end
+
+@interface SUDelegateProxy : NSProxy <SUUpdaterDelegatePrivate>
 
 @property (nonatomic, assign) id realDelegate;
 @property (nonatomic, assign) SUUpdaterQueue *updaterQueue;
@@ -320,7 +325,7 @@
         SUBasicUpdateDriver *driver = nil;
         if (self.resultUIDrivers.count > 1)
         {
-            SUUpdater *mainUpdater = [SUUpdater sharedUpdater];
+            SUUpdater<SUUpdaterPrivate> *mainUpdater = (SUUpdater<SUUpdaterPrivate> *)[SUUpdater sharedUpdater];
             driver = [[SUUserInitiatedUpdateDriver alloc] initWithUpdater:mainUpdater];
             driver.host = mainUpdater.host;
         }
@@ -405,8 +410,11 @@
     BOOL result = NO;
     if (updater != nil && updater == self.currentUpdater)
     {
-        id realDelegate = ([SUDelegateProxy class] == [updater.delegate class]) ? [(SUDelegateProxy *)updater.delegate realDelegate] : updater.delegate;
-        result = ![realDelegate respondsToSelector:_cmd] || [realDelegate updaterMayCheckForUpdates:updater];
+        id realDelegate = ([SUDelegateProxy class] == [updater.delegate class]
+                           ? [(SUDelegateProxy *)updater.delegate realDelegate]
+                           : updater.delegate);
+        result = (![realDelegate respondsToSelector:_cmd] ||
+                  [realDelegate updaterMayCheckForUpdates:updater]);
     }
 
     return result;
@@ -423,8 +431,11 @@
     }
     else
     {
-        id realDelegate = ([SUDelegateProxy class] == [updater.delegate class]) ? [(SUDelegateProxy *)updater.delegate realDelegate] : updater.delegate;
-        result = ![realDelegate respondsToSelector:_cmd] || [realDelegate updater:updater mayShowModalAlert:alertToShow];
+        id realDelegate = ([SUDelegateProxy class] == [updater.delegate class]
+                           ? [(SUDelegateProxy *)updater.delegate realDelegate]
+                           : updater.delegate);
+        result = (![realDelegate respondsToSelector:_cmd] ||
+                  [realDelegate updater:updater mayShowModalAlert:alertToShow]);
     }
     
     return result;

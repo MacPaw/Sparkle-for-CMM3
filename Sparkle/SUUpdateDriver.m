@@ -7,6 +7,7 @@
 //
 
 #import "SUUpdateDriver.h"
+#import "SUUpdaterPrivate.h"
 #import "SUHost.h"
 #import "SULog.h"
 
@@ -14,7 +15,7 @@ NSString *const SUUpdateDriverFinishedNotification = @"SUUpdateDriverFinished";
 
 @interface SUUpdateDriver ()
 
-@property (weak) SUUpdater *updater;
+@property (weak) id<SUUpdaterPrivate> updater;
 @property (copy) NSURL *appcastURL;
 @property (getter=isInterruptible) BOOL interruptible;
 @property (assign) SUUpdateAbortReason abortReason;
@@ -31,7 +32,7 @@ NSString *const SUUpdateDriverFinishedNotification = @"SUUpdateDriverFinished";
 @synthesize automaticallyInstallUpdates;
 @synthesize abortReason;
 
-- (instancetype)initWithUpdater:(SUUpdater *)anUpdater
+- (instancetype)initWithUpdater:(id<SUUpdaterPrivate>)anUpdater
 {
     if ((self = [super init])) {
         self.updater = anUpdater;
@@ -39,7 +40,7 @@ NSString *const SUUpdateDriverFinishedNotification = @"SUUpdateDriverFinished";
     return self;
 }
 
-- (NSString *)description { return [NSString stringWithFormat:@"%@ <%@, %@>", [self class], [self.host bundlePath], [self.host installationPath]]; }
+- (NSString *)description { return [NSString stringWithFormat:@"%@ <%@>", [self class], [self.host bundlePath]]; }
 
 - (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)h
 {
@@ -54,14 +55,26 @@ NSString *const SUUpdateDriverFinishedNotification = @"SUUpdateDriverFinished";
     [[NSNotificationCenter defaultCenter] postNotificationName:SUUpdateDriverFinishedNotification object:self];
 }
 
-- (BOOL)shouldShowUI
-{
+
+-(BOOL)resumeUpdateInteractively {
+    return NO;
+}
+
+-(BOOL)downloadsAppcastInBackground {
+    return YES;
+}
+
+-(BOOL)downloadsUpdatesInBackground {
+    return NO;
+}
+
+-(BOOL)shouldShowUI {
     return NO;
 }
 
 - (void)showAlert:(NSAlert *)alert {
     // Only UI-based subclass shows the actual alert
-    SULog(@"ALERT: %@\n%@", alert.messageText, alert.informativeText);
+    SULog(SULogLevelDefault, @"ALERT: %@\n%@", alert.messageText, alert.informativeText);
 }
 
 @end
