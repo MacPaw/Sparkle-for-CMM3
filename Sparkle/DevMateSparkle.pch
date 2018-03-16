@@ -45,3 +45,12 @@
 #define NTSynchronousTask                       DM_NTSynchronousTask
 #define SUUpdaterWorking                        DM_SUUpdater // Used in SUUpdaterLoader.m file
 #define SUUpdaterLoader                         DM_SUUpdaterLoader
+#define SUApplicationInfo                       DM_SUApplicationInfo
+#define SUBundleIcon                            DM_SUBundleIcon
+#define SUFileManager                           DM_SUFileManager
+#define SUOperatingSystem                       DM_SUOperatingSystem
+#define SUSystemUpdateInfo                      DM_SUSystemUpdateInfo
+#define SUTouchBarButtonGroup                   DM_SUTouchBarButtonGroup
+#define SUUnarchiverNotifier                    DM_SUUnarchiverNotifier
+#define SUUpdatePermissionResponse              DM_SUUpdatePermissionResponse
+#define SUUpdateValidator                       DM_SUUpdateValidator
