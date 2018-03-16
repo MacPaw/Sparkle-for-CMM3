@@ -379,7 +379,9 @@ CF_EXPORT CFDictionaryRef DMCopyHTTPRequestHeaders(CFBundleRef appBundle, CFData
         success = NO;
     } else {
         // Currently unsafe archives are the only case where we can prevalidate before extraction, but that could change in the future
-        BOOL needsPrevalidation = [[unarchiver class] unsafeIfArchiveIsNotValidated];
+        BOOL needsPrevalidation = ([[unarchiver class] unsafeIfArchiveIsNotValidated]
+                                   ? (self.updateItem.DSASignature != nil || self.host.publicDSAKey != nil)
+                                   : NO);
         
         self.updateValidator = [[SUUpdateValidator alloc] initWithDownloadPath:self.downloadPath dsaSignature:self.updateItem.DSASignature host:self.host performingPrevalidation:needsPrevalidation];
         
