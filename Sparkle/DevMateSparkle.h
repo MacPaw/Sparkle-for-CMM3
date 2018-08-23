@@ -6,10 +6,11 @@
 //
 //
 
-#ifndef Sparkle_DevMateSparkle_h
-#define Sparkle_DevMateSparkle_h
-
+#if __has_feature(modules)
+@import Cocoa;
+#else
 #import <Cocoa/Cocoa.h>
+#endif
 
 // If you are using your own copy of Sparkle.framework just define
 // USED_CUSTOM_SPARKLE_FRAMEWORK macro.
@@ -25,17 +26,15 @@
 #define SUStandardVersionComparator             DM_SUStandardVersionComparator
 #define SUVersionDisplay                        DM_SUVersionDisplay
 
-#import <DevMateSparkle/SUExport.h>
-#import <DevMateSparkle/SUUpdater.h>
-#import <DevMateSparkle/SUUpdaterQueue.h>
-#import <DevMateSparkle/SUUpdaterDelegate.h>
-#import <DevMateSparkle/SUAppcast.h>
-#import <DevMateSparkle/SUAppcastItem.h>
-#import <DevMateSparkle/SUVersionComparisonProtocol.h>
-#import <DevMateSparkle/SUStandardVersionComparator.h>
-#import <DevMateSparkle/SUVersionDisplayProtocol.h>
-#import <DevMateSparkle/SUErrors.h>
+#import "SUExport.h"
+#import "SUUpdater.h"
+#import "SUUpdaterQueue.h"
+#import "SUUpdaterDelegate.h"
+#import "SUAppcast.h"
+#import "SUAppcastItem.h"
+#import "SUVersionComparisonProtocol.h"
+#import "SUStandardVersionComparator.h"
+#import "SUVersionDisplayProtocol.h"
+#import "SUErrors.h"
 
 #endif // USED_CUSTOM_SPARKLE_FRAMEWORK
-
-#endif // Sparkle_DevMateSparkle_h
