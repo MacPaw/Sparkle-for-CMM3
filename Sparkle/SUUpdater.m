@@ -33,7 +33,7 @@ NSString *const SUUpdaterWillRestartNotification = @"SUUpdaterWillRestartNotific
 NSString *const SUUpdaterAppcastItemNotificationKey = @"SUUpdaterAppcastItemNotificationKey";
 NSString *const SUUpdaterAppcastNotificationKey = @"SUUpdaterAppCastNotificationKey";
 
-@interface SUUpdater () <SUUpdaterPrivate>
+@interface SUUpdater () <SUUpdaterPrivate, SUHostDelegate>
 @property (strong) NSTimer *checkTimer;
 @property (strong) NSBundle *sparkleBundle;
 
@@ -120,7 +120,8 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
         }
         [sharedUpdaters setObject:self forKey:[NSValue valueWithNonretainedObject:bundle]];
         host = [[SUHost alloc] initWithBundle:bundle];
-
+        host.delegate = self;
+        
         // This runs the permission prompt if needed, but never before the app has finished launching because the runloop won't run before that
         [self performSelector:@selector(startUpdateCycle) withObject:nil afterDelay:0];
     }
@@ -630,6 +631,13 @@ static NSString *escapeURLComponent(NSString *str) {
     }
     
     return parameters;
+}
+
+#pragma mark - SUHostDeleage
+
+- (BOOL)host:(SUHost *)host shouldGetInfoFromBundleItselfForBundle:(NSBundle *)bundle
+{
+    return [self.delegate updater:self shouldGetInfoFromBundleItselfForBundle:bundle];
 }
 
 @end
