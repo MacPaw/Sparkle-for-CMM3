@@ -7,7 +7,17 @@
 
 #import <Foundation/Foundation.h>
 
+@class SUHost;
+
+@protocol SUHostDelegate <NSObject>
+
+- (BOOL)host:(SUHost *)host shouldGetInfoFromBundleItselfForBundle:(NSBundle *)bundle;
+
+@end
+
 @interface SUHost : NSObject
+
+@property (weak) id<SUHostDelegate> delegate;
 
 @property (strong, readonly) NSBundle *bundle;
 
