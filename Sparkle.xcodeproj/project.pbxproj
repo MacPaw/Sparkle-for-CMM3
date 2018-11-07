@@ -2847,6 +2847,7 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 2M6BY8QGR8;
+				ENABLE_HARDENED_RUNTIME = YES;
 				VALID_ARCHS = x86_64;
 			};
 			name = Coverage;
@@ -2933,6 +2934,7 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 2M6BY8QGR8;
+				ENABLE_HARDENED_RUNTIME = YES;
 				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
@@ -2944,6 +2946,7 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 2M6BY8QGR8;
+				ENABLE_HARDENED_RUNTIME = YES;
 				VALID_ARCHS = x86_64;
 			};
 			name = Release;
