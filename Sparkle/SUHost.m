@@ -143,12 +143,7 @@
 
 - (id)objectForInfoDictionaryKey:(NSString *)key
 {
-    if ([self.delegate host:self shouldGetInfoFromBundleItselfForBundle:self.bundle])
-    {
-        return [self.bundle objectForInfoDictionaryKey:key];
-    }
-    
-    if (self.isMainBundle) {
+    if (self.isMainBundle || [self.delegate host:self shouldGetInfoFromBundleItselfForBundle:self.bundle]) {
         // Common fast path - if we're updating the main bundle, that means our updater and host bundle's lifetime is the same
         // If the bundle happens to be updated or change, that means our updater process needs to be terminated first to do it safely
         // Thus we can rely on the cached Info dictionary

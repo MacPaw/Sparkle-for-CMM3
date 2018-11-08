@@ -635,9 +635,11 @@ static NSString *escapeURLComponent(NSString *str) {
 
 #pragma mark - SUHostDeleage
 
-- (BOOL)host:(SUHost *)host shouldGetInfoFromBundleItselfForBundle:(NSBundle *)bundle
+- (BOOL)host:(SUHost *)__unused host shouldGetInfoFromBundleItselfForBundle:(NSBundle *)bundle
 {
-    return [self.delegate updater:self shouldGetInfoFromBundleItselfForBundle:bundle];
+    id<SUUpdaterDelegate> strongDelegate = self.delegate;
+    return ([strongDelegate respondsToSelector:@selector(updater:shouldGetInfoFromBundleItselfForBundle:)] &&
+            [strongDelegate updater:self shouldGetInfoFromBundleItselfForBundle:bundle]);
 }
 
 @end
