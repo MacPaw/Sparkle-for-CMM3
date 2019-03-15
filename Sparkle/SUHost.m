@@ -143,21 +143,7 @@
 
 - (id)objectForInfoDictionaryKey:(NSString *)key
 {
-    if (self.isMainBundle || [self.delegate host:self shouldGetInfoFromBundleItselfForBundle:self.bundle]) {
-        // Common fast path - if we're updating the main bundle, that means our updater and host bundle's lifetime is the same
-        // If the bundle happens to be updated or change, that means our updater process needs to be terminated first to do it safely
-        // Thus we can rely on the cached Info dictionary
-        return [self.bundle objectForInfoDictionaryKey:key];
-    } else {
-        // Slow path - if we're updating another bundle, we should read in the most up to date Info dictionary because
-        // the bundle can be replaced externally or even by us.
-        // This is the easiest way to read the Info dictionary values *correctly* despite some performance loss.
-        // A mutable method to reload the Info dictionary at certain points and have it cached at other points is challenging to do correctly.
-        CFDictionaryRef cfInfoDictionary = CFBundleCopyInfoDictionaryInDirectory((CFURLRef)self.bundle.bundleURL);
-        NSDictionary *infoDictionary = CFBridgingRelease(cfInfoDictionary);
-        
-        return [infoDictionary objectForKey:key];
-    }
+    return [self.bundle objectForInfoDictionaryKey:key];
 }
 
 - (BOOL)boolForInfoDictionaryKey:(NSString *)key

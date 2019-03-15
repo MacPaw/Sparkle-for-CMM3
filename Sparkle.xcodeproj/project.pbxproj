@@ -1929,7 +1929,7 @@
 					};
 					331726741B4D36F2008B2D77 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 2M6BY8QGR8;
+						DevelopmentTeam = S8EX82NJP6;
 						ProvisioningStyle = Manual;
 					};
 					331726961B4D5F27008B2D77 = {
@@ -1939,31 +1939,31 @@
 					};
 					33545B801B4679080059250D = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 2M6BY8QGR8;
+						DevelopmentTeam = S8EX82NJP6;
 						ProvisioningStyle = Manual;
 					};
 					55C14BB6136EEF1500649790 = {
-						DevelopmentTeam = 2M6BY8QGR8;
+						DevelopmentTeam = S8EX82NJP6;
 						ProvisioningStyle = Manual;
 					};
 					5AA96C541E0AE0DB00CA4346 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 2M6BY8QGR8;
+						DevelopmentTeam = S8EX82NJP6;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Manual;
 					};
 					5D06E8CF0FD68C7C005AE3F6 = {
-						DevelopmentTeam = 2M6BY8QGR8;
+						DevelopmentTeam = S8EX82NJP6;
 						ProvisioningStyle = Manual;
 					};
 					612279D80DB5470200AB99EA = {
-						DevelopmentTeam = 2M6BY8QGR8;
+						DevelopmentTeam = S8EX82NJP6;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Manual;
 						TestTargetID = 8DC2EF4F0486A6940098B216;
 					};
 					61B5F90109C4CEE200B25A18 = {
-						DevelopmentTeam = 2M6BY8QGR8;
+						DevelopmentTeam = S8EX82NJP6;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
@@ -1973,18 +1973,18 @@
 					};
 					722954B31D04ADAF00ECF9CA = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 2M6BY8QGR8;
+						DevelopmentTeam = S8EX82NJP6;
 						ProvisioningStyle = Manual;
 					};
 					726B2B5C1C645FC900388755 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 2M6BY8QGR8;
+						DevelopmentTeam = S8EX82NJP6;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Manual;
 						TestTargetID = 61B5F90109C4CEE200B25A18;
 					};
 					8DC2EF4F0486A6940098B216 = {
-						DevelopmentTeam = 2M6BY8QGR8;
+						DevelopmentTeam = S8EX82NJP6;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -2856,6 +2856,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941CA0D94A70100DD942E /* ConfigFrameworkDebug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Coverage;
 		};
@@ -2863,6 +2864,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941CB0D94A70100DD942E /* ConfigTestAppDebug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Coverage;
 		};
@@ -2870,6 +2872,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 149B78641B7D3A4800D7D62C /* ConfigUnitTestCoverage.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Coverage;
 		};
@@ -2877,6 +2880,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5D06E8F20FD68D21005AE3F6 /* ConfigBinaryDeltaDebug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Coverage;
 		};
@@ -2884,6 +2888,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941D30D94A70100DD942E /* ConfigRelaunchDebug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Coverage;
 		};
@@ -2909,6 +2914,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941CA0D94A70100DD942E /* ConfigFrameworkDebug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/External",
@@ -2920,6 +2926,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941D50D94A70100DD942E /* ConfigFrameworkRelease.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/External",
@@ -2956,6 +2963,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CONTENTS_FOLDER_PATH = "$(FULL_PRODUCT_NAME)";
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 				PRODUCT_NAME = DevMateSparkle_Resources;
 				WRAPPER_SUFFIX = "";
 			};
@@ -2966,6 +2974,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CONTENTS_FOLDER_PATH = "$(FULL_PRODUCT_NAME)";
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 				PRODUCT_NAME = DevMateSparkle_Resources;
 				WRAPPER_SUFFIX = "";
 			};
@@ -3000,6 +3009,7 @@
 		33545B8F1B4679080059250D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 				INFOPLIST_FILE = "Sparkle/Installation XPC Service/SandboxService.plist";
 				PRODUCT_NAME = com.devmate.UpdateInstaller;
 			};
@@ -3008,6 +3018,7 @@
 		33545B901B4679080059250D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 				INFOPLIST_FILE = "Sparkle/Installation XPC Service/SandboxService.plist";
 				PRODUCT_NAME = com.devmate.UpdateInstaller;
 			};
@@ -3024,6 +3035,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 				PRODUCT_NAME = DevMateSparkle_lib_resources;
 			};
 			name = Coverage;
@@ -3039,6 +3051,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941D30D94A70100DD942E /* ConfigRelaunchDebug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Debug;
 		};
@@ -3046,6 +3059,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941D40D94A70100DD942E /* ConfigRelaunchRelease.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Release;
 		};
@@ -3053,6 +3067,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7205C4351E12CA7000E370AE /* ConfigGenerateAppcastDebug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Debug;
 		};
@@ -3060,6 +3075,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7205C4351E12CA7000E370AE /* ConfigGenerateAppcastDebug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Coverage;
 		};
@@ -3067,6 +3083,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7205C4341E12C66D00E370AE /* ConfigGenerateAppcastRelease.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Release;
 		};
@@ -3074,6 +3091,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5D06E8F20FD68D21005AE3F6 /* ConfigBinaryDeltaDebug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Debug;
 		};
@@ -3081,6 +3099,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5D06E8F30FD68D21005AE3F6 /* ConfigBinaryDeltaRelease.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Release;
 		};
@@ -3088,6 +3107,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA3AAF3A1050B273004B3130 /* ConfigUnitTestDebug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Debug;
 		};
@@ -3095,6 +3115,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA3AAF391050B273004B3130 /* ConfigUnitTestRelease.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Release;
 		};
@@ -3102,6 +3123,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941CB0D94A70100DD942E /* ConfigTestAppDebug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Debug;
 		};
@@ -3109,6 +3131,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941D20D94A70100DD942E /* ConfigTestAppRelease.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Release;
 		};
@@ -3116,6 +3139,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 722954C81D04E89500ECF9CA /* ConfigFileop.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3125,6 +3149,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 722954C81D04E89500ECF9CA /* ConfigFileop.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3134,6 +3159,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 722954C81D04E89500ECF9CA /* ConfigFileop.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3143,6 +3169,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 729F10FF1C65A9B500DFCCC5 /* ConfigUITestDebug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Debug;
 		};
@@ -3150,6 +3177,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 729F10FE1C65A9B500DFCCC5 /* ConfigUITestCoverage.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Coverage;
 		};
@@ -3157,6 +3185,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 729F11001C65A9B500DFCCC5 /* ConfigUITestRelease.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = S8EX82NJP6;
 			};
 			name = Release;
 		};
