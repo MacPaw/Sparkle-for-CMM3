@@ -105,8 +105,8 @@
 		331726DC1B4D625A008B2D77 /* SUUserInitiatedUpdateDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A354540DF113C70076ECB1 /* SUUserInitiatedUpdateDriver.m */; };
 		331726E21B4D66EE008B2D77 /* DevMateSparkle.h in Headers */ = {isa = PBXBuildFile; fileRef = 331726DF1B4D6438008B2D77 /* DevMateSparkle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		331726E31B4D697E008B2D77 /* SUUpdaterLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 331726E11B4D65AA008B2D77 /* SUUpdaterLoader.m */; };
-		3329D9C41C7B03B800F1B058 /* com.devmate.UpdateInstaller.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 33545B811B4679080059250D /* com.devmate.UpdateInstaller.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		3329D9C61C7B217C00F1B058 /* com.devmate.UpdateInstaller.xpc in Copy XPC services */ = {isa = PBXBuildFile; fileRef = 33545B811B4679080059250D /* com.devmate.UpdateInstaller.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3329D9C41C7B03B800F1B058 /* com.devmate.UpdateInstaller-cmm3.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 33545B811B4679080059250D /* com.devmate.UpdateInstaller-cmm3.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3329D9C61C7B217C00F1B058 /* com.devmate.UpdateInstaller-cmm3.xpc in Copy XPC services */ = {isa = PBXBuildFile; fileRef = 33545B811B4679080059250D /* com.devmate.UpdateInstaller-cmm3.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		33545B921B4679810059250D /* install_service.m in Sources */ = {isa = PBXBuildFile; fileRef = 33545B771B46774D0059250D /* install_service.m */; };
 		33545B931B4687CD0059250D /* SUConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 61299A5F09CA6EB100B7442F /* SUConstants.m */; };
 		33545B941B468A160059250D /* SULog.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C14F05136EF6DB00649790 /* SULog.m */; };
@@ -534,7 +534,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				3329D9C41C7B03B800F1B058 /* com.devmate.UpdateInstaller.xpc in CopyFiles */,
+				3329D9C41C7B03B800F1B058 /* com.devmate.UpdateInstaller-cmm3.xpc in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,7 +544,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				3329D9C61C7B217C00F1B058 /* com.devmate.UpdateInstaller.xpc in Copy XPC services */,
+				3329D9C61C7B217C00F1B058 /* com.devmate.UpdateInstaller-cmm3.xpc in Copy XPC services */,
 			);
 			name = "Copy XPC services";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -666,7 +666,7 @@
 		33545B7A1B46774D0059250D /* SUInstallServiceConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUInstallServiceConstants.h; sourceTree = "<group>"; };
 		33545B7B1B46774D0059250D /* SUXPCInstaller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUXPCInstaller.h; sourceTree = "<group>"; };
 		33545B7C1B46774D0059250D /* SUXPCInstaller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUXPCInstaller.m; sourceTree = "<group>"; };
-		33545B811B4679080059250D /* com.devmate.UpdateInstaller.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = com.devmate.UpdateInstaller.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		33545B811B4679080059250D /* com.devmate.UpdateInstaller-cmm3.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = "com.devmate.UpdateInstaller-cmm3.xpc"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3772FEA813DE0B6B00F79537 /* SUVersionDisplayProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SUVersionDisplayProtocol.h; sourceTree = "<group>"; };
 		4607BEA21948443800EF8DA4 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Sparkle.strings; sourceTree = "<group>"; };
 		4607BEA31948443800EF8DA4 /* nb */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nb; path = nb.lproj/SUAutomaticUpdateAlert.xib; sourceTree = "<group>"; };
@@ -1097,7 +1097,7 @@
 				61B5F90209C4CEE200B25A18 /* Sparkle Test App.app */,
 				612279D90DB5470200AB99EA /* Sparkle Unit Tests.xctest */,
 				8DC2EF5B0486A6940098B216 /* Sparkle.framework */,
-				33545B811B4679080059250D /* com.devmate.UpdateInstaller.xpc */,
+				33545B811B4679080059250D /* com.devmate.UpdateInstaller-cmm3.xpc */,
 				331726751B4D36F2008B2D77 /* DevMateSparkle_Resources */,
 				331726971B4D5F27008B2D77 /* libDevMateSparkle.a */,
 				726B2B5D1C645FC900388755 /* UI Tests.xctest */,
@@ -1749,7 +1749,7 @@
 			);
 			name = "Installation XPC Service";
 			productName = "Installation XPC Service";
-			productReference = 33545B811B4679080059250D /* com.devmate.UpdateInstaller.xpc */;
+			productReference = 33545B811B4679080059250D /* com.devmate.UpdateInstaller-cmm3.xpc */;
 			productType = "com.apple.product-type.xpc-service";
 		};
 		55C14BB6136EEF1500649790 /* Autoupdate */ = {
@@ -2167,7 +2167,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$SRCROOT/Configurations/set-git-version-info.sh\"";
+			shellScript = "\"$SRCROOT/Configurations/set-git-version-info.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		331726921B4D37FA008B2D77 /* Run Script: Update Locales */ = {
@@ -3011,7 +3011,8 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = S8EX82NJP6;
 				INFOPLIST_FILE = "Sparkle/Installation XPC Service/SandboxService.plist";
-				PRODUCT_NAME = com.devmate.UpdateInstaller;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.devmate.UpdateInstaller-cmm3";
+				PRODUCT_NAME = "com.devmate.UpdateInstaller-cmm3";
 			};
 			name = Debug;
 		};
@@ -3020,13 +3021,15 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = S8EX82NJP6;
 				INFOPLIST_FILE = "Sparkle/Installation XPC Service/SandboxService.plist";
-				PRODUCT_NAME = com.devmate.UpdateInstaller;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.devmate.UpdateInstaller-cmm3";
+				PRODUCT_NAME = "com.devmate.UpdateInstaller-cmm3";
 			};
 			name = Release;
 		};
 		33E0CFB81B835C99003B201B /* Coverage */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = "com.devmate.UpdateInstaller-cmm3";
 				PRODUCT_NAME = "Installation XPC Service";
 			};
 			name = Coverage;
