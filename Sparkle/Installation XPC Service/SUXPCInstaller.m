@@ -24,7 +24,7 @@ BOOL SUShouldUseXPCInstaller(void)
     BOOL hasXPC = NO;
     for (NSURL *URL in enumerator)
     {
-        if (![URL.lastPathComponent isEqualToString:@"com.devmate.UpdateInstaller.xpc"])
+        if (![URL.lastPathComponent isEqualToString:@"com.devmate.UpdateInstaller-cmm3.xpc"])
             continue;
         
         if (![[URL URLByDeletingLastPathComponent].lastPathComponent isEqualToString:@"XPCServices"])
@@ -41,7 +41,7 @@ BOOL SUShouldUseXPCInstaller(void)
 
 + (xpc_connection_t)getSandboxXPCService
 {
-    __block xpc_connection_t serviceConnection = xpc_connection_create("com.devmate.UpdateInstaller", dispatch_get_main_queue());
+    __block xpc_connection_t serviceConnection = xpc_connection_create("com.devmate.UpdateInstaller-cmm3", dispatch_get_main_queue());
     
     if (!serviceConnection)
     {
